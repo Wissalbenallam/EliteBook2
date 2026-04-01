@@ -1,0 +1,123 @@
+@page
+@model TestDatabaseModel
+@{
+    ViewData["Title"] = "Database Test";
+}
+
+<div class="container mt-5">
+    <h1>🧪 Database Connection Test</h1>
+    
+    @if (Model.IsConnected)
+    {
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">✅ Connection Successful!</h4>
+            <p>Database is properly configured and connected.</p>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">📊 Data Statistics</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Transporteurs: <strong>@Model.TransporteurCount</strong></li>
+                            <li class="list-group-item">Camions: <strong>@Model.CamionCount</strong></li>
+                            <li class="list-group-item">Chauffeurs: <strong>@Model.ChauffeurCount</strong></li>
+                            <li class="list-group-item">Clients: <strong>@Model.ClientCount</strong></li>
+                            <li class="list-group-item">Tournées: <strong>@Model.TourneeCount</strong></li>
+                            <li class="list-group-item">Livraisons: <strong>@Model.LivraisonCount</strong></li>
+                            <li class="list-group-item">Coûts: <strong>@Model.CoutCount</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">📋 Sample Data</h5>
+                        @if (Model.Transporteurs.Any())
+                        {
+                            <h6>Transporteurs:</h6>
+                            <ul>
+                                @foreach (var t in Model.Transporteurs)
+                                {
+                                    <li>@t.Nom - @t.Telephone</li>
+                                }
+                            </ul>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">🚚 Latest Tours</h5>
+                        @if (Model.Tournees.Any())
+                        {
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Driver</th>
+                                        <th>Cost</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var t in Model.Tournees)
+                                    {
+                                        <tr>
+                                            <td>@t.TourneeId</td>
+                                            <td>@t.DateTournee.ToString("yyyy-MM-dd")</td>
+                                            <td><span class="badge bg-info">@t.StatutTournee</span></td>
+                                            <td>@t.Chauffeur.Nom @t.Chauffeur.Prenom</td>
+                                            <td>@t.CoutTotal.ToString("C")</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <p class="text-warning">No tours found. Check if sample data was loaded.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">❌ Connection Failed!</h4>
+            <p><strong>Error:</strong> @Model.ErrorMessage</p>
+            <hr>
+            <p class="mb-0">
+                <strong>Troubleshooting Steps:</strong>
+                <ul>
+                    <li>Verify SQL Server is running</li>
+                    <li>Check connection string in appsettings.json</li>
+                    <li>Run the database script: Database/TMS_Database_Script.sql</li>
+                    <li>Check that TMSDatabase was created</li>
+                </ul>
+            </p>
+        </div>
+    }
+</div>
+
+<style>
+    body {
+        background-color: #f5f5f5;
+    }
+    .container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+</style>
