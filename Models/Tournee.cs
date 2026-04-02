@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace TMS_Project.Models
 {
     public class Tournee
@@ -18,5 +20,6 @@ namespace TMS_Project.Models
         // Relationships
         public ICollection<Livraison> Livraisons { get; set; } = new List<Livraison>();
         public ICollection<Cout> Couts { get; set; } = new List<Cout>();
-    }
+
+}
 }

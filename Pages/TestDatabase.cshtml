@@ -1,24 +1,24 @@
 @page
 @model TestDatabaseModel
 @{
-    ViewData["Title"] = "Database Test";
+    ViewData["Title"] = "Test de la Base de Données";
 }
 
 <div class="container mt-5">
-    <h1>🧪 Database Connection Test</h1>
+    <h1>Test de Connexion à la Base de Données</h1>
     
     @if (Model.IsConnected)
     {
         <div class="alert alert-success" role="alert">
-            <h4 class="alert-heading">✅ Connection Successful!</h4>
-            <p>Database is properly configured and connected.</p>
+            <h4 class="alert-heading">Connexion Réussie !</h4>
+            <p>La base de données est correctement configurée et connectée.</p>
         </div>
 
         <div class="row mt-4">
             <div class="col-md-6">
-                <div class="card">
+                <div class="card shadow-sm">
                     <div class="card-body">
-                        <h5 class="card-title">📊 Data Statistics</h5>
+                        <h5 class="card-title">📊 Statistiques des Données</h5>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">Transporteurs: <strong>@Model.TransporteurCount</strong></li>
                             <li class="list-group-item">Camions: <strong>@Model.CamionCount</strong></li>
@@ -33,12 +33,12 @@
             </div>
 
             <div class="col-md-6">
-                <div class="card">
+                <div class="card shadow-sm">
                     <div class="card-body">
-                        <h5 class="card-title">📋 Sample Data</h5>
+                        <h5 class="card-title">📋 Exemples de Données</h5>
                         @if (Model.Transporteurs.Any())
                         {
-                            <h6>Transporteurs:</h6>
+                            <h6>Transporteurs :</h6>
                             <ul>
                                 @foreach (var t in Model.Transporteurs)
                                 {
@@ -53,19 +53,19 @@
 
         <div class="row mt-4">
             <div class="col-md-12">
-                <div class="card">
+                <div class="card shadow-sm">
                     <div class="card-body">
-                        <h5 class="card-title">🚚 Latest Tours</h5>
+                        <h5 class="card-title">🚚 Dernières Tournées</h5>
                         @if (Model.Tournees.Any())
                         {
-                            <table class="table table-striped">
-                                <thead>
+                            <table class="table table-hover mt-3">
+                                <thead class="table-light">
                                     <tr>
                                         <th>ID</th>
                                         <th>Date</th>
-                                        <th>Status</th>
-                                        <th>Driver</th>
-                                        <th>Cost</th>
+                                        <th>Statut</th>
+                                        <th>Chauffeur</th>
+                                        <th>Coût</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -76,7 +76,7 @@
                                             <td>@t.DateTournee.ToString("yyyy-MM-dd")</td>
                                             <td><span class="badge bg-info">@t.StatutTournee</span></td>
                                             <td>@t.Chauffeur.Nom @t.Chauffeur.Prenom</td>
-                                            <td>@t.CoutTotal.ToString("C")</td>
+                                            <td class="fw-bold">@t.CoutTotal.ToString("N2") DH</td>
                                         </tr>
                                     }
                                 </tbody>
@@ -84,7 +84,7 @@
                         }
                         else
                         {
-                            <p class="text-warning">No tours found. Check if sample data was loaded.</p>
+                            <p class="text-warning">Aucune tournée trouvée. Vérifiez si les données de test ont été chargées.</p>
                         }
                     </div>
                 </div>
@@ -94,16 +94,16 @@
     else
     {
         <div class="alert alert-danger" role="alert">
-            <h4 class="alert-heading">❌ Connection Failed!</h4>
-            <p><strong>Error:</strong> @Model.ErrorMessage</p>
+            <h4 class="alert-heading">❌ Échec de la Connexion !</h4>
+            <p><strong>Erreur :</strong> @Model.ErrorMessage</p>
             <hr>
             <p class="mb-0">
-                <strong>Troubleshooting Steps:</strong>
+                <strong>Étapes de dépannage :</strong>
                 <ul>
-                    <li>Verify SQL Server is running</li>
-                    <li>Check connection string in appsettings.json</li>
-                    <li>Run the database script: Database/TMS_Database_Script.sql</li>
-                    <li>Check that TMSDatabase was created</li>
+                    <li>Vérifiez que SQL Server est en cours d'exécution</li>
+                    <li>Vérifiez la chaîne de connexion dans appsettings.json</li>
+                    <li>Exécutez le script : Database/TMS_Database_Script.sql</li>
+                    <li>Vérifiez que la base de données TMSDatabase a été créée</li>
                 </ul>
             </p>
         </div>
@@ -112,12 +112,16 @@
 
 <style>
     body {
-        background-color: #f5f5f5;
+        background-color: #f8f9fa;
     }
     .container {
         background-color: white;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+    .card {
+        border: none;
+        border-radius: 10px;
     }
 </style>

@@ -2,41 +2,40 @@ using TMS_Project.Models;
 
 namespace TMS_Project.Data
 {
-    public static class DbInitializerExtensions
+    public static class DbInitializer
     {
         public static void Initialize(TmsDbContext context)
         {
             // Check if database already has data
-            if (context.Transporteurs.Any())
-            {
-                return; // Database already seeded
-            }
+            context.Database.EnsureDeleted();
 
+            // 2. هادي غتكرييها خاوية من جديد
+            context.Database.EnsureCreated();
             // Create Transporteurs
             var transporteurs = new List<Transporteur>
             {
                 new Transporteur
                 {
                     Nom = "Express Transport",
-                    Adresse = "123 Rue de la Paix, Paris",
-                    Telephone = "01-23-45-67-89",
-                    Email = "contact@expresstransport.fr",
+                    Adresse = "123 Rue de la Paix, Casa Blanca",
+                    Telephone = "**-**-**-**-**",
+                    Email = "contact@expresstransport.ma",
                     DateCreation = DateTime.Now
                 },
                 new Transporteur
                 {
                     Nom = "Logistique Plus",
-                    Adresse = "456 Avenue des Routes, Lyon",
-                    Telephone = "04-56-78-90-12",
-                    Email = "info@logistiqueplus.fr",
+                    Adresse = "456 Avenue des Routes, Rabat",
+                    Telephone = "**-**-**-**-**",
+                    Email = "info@logistiqueplus.ma",
                     DateCreation = DateTime.Now
                 },
                 new Transporteur
                 {
                     Nom = "Transco Solutions",
-                    Adresse = "789 Boulevard Commerce, Marseille",
-                    Telephone = "04-91-12-34-56",
-                    Email = "contact@transco.fr",
+                    Adresse = "789 Boulevard Commerce, Tanger",
+                    Telephone = "**-**-**-**-**",
+                    Email = "contact@transco.ma",
                     DateCreation = DateTime.Now
                 }
             };
@@ -52,7 +51,7 @@ namespace TMS_Project.Data
                     TransporteurId = 1,
                     Marque = "Volvo",
                     Modele = "FH16",
-                    Immatriculation = "AB-123-CD",
+                    Immatriculation = "123ABC456",
                     CapaciteKg = 25000,
                     DateAcquisition = new DateTime(2022, 1, 15),
                     EstActif = true
@@ -62,7 +61,7 @@ namespace TMS_Project.Data
                     TransporteurId = 1,
                     Marque = "Mercedes",
                     Modele = "Actros",
-                    Immatriculation = "EF-456-GH",
+                    Immatriculation = "456DEF789",
                     CapaciteKg = 20000,
                     DateAcquisition = new DateTime(2021, 6, 20),
                     EstActif = true
@@ -72,7 +71,7 @@ namespace TMS_Project.Data
                     TransporteurId = 2,
                     Marque = "Renault",
                     Modele = "T480",
-                    Immatriculation = "IJ-789-KL",
+                    Immatriculation = "789GHI012",
                     CapaciteKg = 18000,
                     DateAcquisition = new DateTime(2023, 3, 10),
                     EstActif = true
@@ -82,7 +81,7 @@ namespace TMS_Project.Data
                     TransporteurId = 3,
                     Marque = "DAF",
                     Modele = "XF",
-                    Immatriculation = "MN-012-OP",
+                    Immatriculation = "012JKL345",
                     CapaciteKg = 24000,
                     DateAcquisition = new DateTime(2020, 11, 5),
                     EstActif = true
@@ -98,44 +97,44 @@ namespace TMS_Project.Data
                 new Chauffeur
                 {
                     TransporteurId = 1,
-                    Nom = "Dupont",
-                    Prenom = "Jean",
+                    Nom = "Zaari",
+                    Prenom = "Ali",
                     Telephone = "06-11-22-33-44",
-                    Email = "jean.dupont@expresstransport.fr",
-                    NumeroPermis = "FR12345678",
+                    Email = "Ali.Zaari@expresstransport.ma",
+                    NumeroPermis = "MA123456789",
                     DateEmbauche = new DateTime(2019, 9, 1),
                     EstActif = true
                 },
                 new Chauffeur
                 {
                     TransporteurId = 1,
-                    Nom = "Martin",
-                    Prenom = "Pierre",
+                    Nom = "Rachidi",
+                    Prenom = "Hamid",
                     Telephone = "06-55-66-77-88",
-                    Email = "pierre.martin@expresstransport.fr",
-                    NumeroPermis = "FR87654321",
+                    Email = "Rachidi.Hamid@expresstransport.ma",
+                    NumeroPermis = "MA987654321",
                     DateEmbauche = new DateTime(2020, 3, 15),
                     EstActif = true
                 },
                 new Chauffeur
                 {
                     TransporteurId = 2,
-                    Nom = "Bernard",
-                    Prenom = "Michel",
+                    Nom = "Idrissi",
+                    Prenom = "Aziz",
                     Telephone = "06-99-88-77-66",
-                    Email = "michel.bernard@logistiqueplus.fr",
-                    NumeroPermis = "FR11223344",
+                    Email = "Idrissi.Aziz@logistiqueplus.ma",
+                    NumeroPermis = "MA456789123",
                     DateEmbauche = new DateTime(2021, 1, 10),
                     EstActif = true
                 },
                 new Chauffeur
                 {
                     TransporteurId = 3,
-                    Nom = "Moreau",
-                    Prenom = "Luc",
+                    Nom = "Fadili",
+                    Prenom = "Ayoub",
                     Telephone = "06-44-55-66-77",
-                    Email = "luc.moreau@transco.fr",
-                    NumeroPermis = "FR55667788",
+                    Email = "Fadili.Ayoub@transco.ma",
+                    NumeroPermis = "MA321654987",
                     DateEmbauche = new DateTime(2018, 7, 20),
                     EstActif = true
                 }
@@ -150,33 +149,33 @@ namespace TMS_Project.Data
                 new Client
                 {
                     Nom = "Supermarché Central",
-                    Adresse = "100 Rue Commerce, Paris",
-                    Telephone = "01-45-67-89-01",
-                    Email = "delivery@supermarche-central.fr",
+                    Adresse = "100 Rue Commerce, Casa Blanca",
+                    Telephone = "**-**-**-**-**",
+                    Email = "delivery@supermarche-central.ma",
                     DateCreation = DateTime.Now
                 },
                 new Client
                 {
                     Nom = "Petite Épicerie Local",
-                    Adresse = "50 Rue Principale, Lyon",
-                    Telephone = "04-12-34-56-78",
-                    Email = "contact@epicerie-local.fr",
+                    Adresse = "50 Rue Principale, Rabat",
+                    Telephone = "**-**-**-**-**",
+                    Email = "contact@epicerie-local.ma",
                     DateCreation = DateTime.Now
                 },
                 new Client
                 {
                     Nom = "Hyper Magasin",
-                    Adresse = "200 Avenue Commerçant, Marseille",
-                    Telephone = "04-98-76-54-32",
-                    Email = "logistique@hypermagasin.fr",
+                    Adresse = "200 Avenue Commerçant, Rabat",
+                    Telephone = "**-**-**-**-**",
+                    Email = "logistique@hypermagasin.ma",
                     DateCreation = DateTime.Now
                 },
                 new Client
                 {
                     Nom = "Magasin Spécialisé",
-                    Adresse = "75 Boulevard Niche, Toulouse",
-                    Telephone = "05-61-22-33-44",
-                    Email = "achat@specialise.fr",
+                    Adresse = "75 Boulevard Niche, Tanger",
+                    Telephone = "**-**-**-**-**",
+                    Email = "achat@specialise.ma",
                     DateCreation = DateTime.Now
                 }
             };
@@ -194,7 +193,7 @@ namespace TMS_Project.Data
                     ChauffeurId = 1,
                     DateTournee = new DateTime(2024, 1, 15, 8, 0, 0),
                     StatutTournee = "Terminée",
-                    CoutTotal = 450.50m
+                    CoutTotal = 4505.50m
                 },
                 new Tournee
                 {
@@ -203,7 +202,7 @@ namespace TMS_Project.Data
                     ChauffeurId = 2,
                     DateTournee = new DateTime(2024, 1, 16, 8, 30, 0),
                     StatutTournee = "En cours",
-                    CoutTotal = 350.00m
+                    CoutTotal = 3500.00m
                 },
                 new Tournee
                 {
@@ -221,7 +220,7 @@ namespace TMS_Project.Data
                     ChauffeurId = 4,
                     DateTournee = new DateTime(2024, 1, 18, 9, 0, 0),
                     StatutTournee = "Terminée",
-                    CoutTotal = 520.75m
+                    CoutTotal = 5207.50m
                 }
             };
 
@@ -235,7 +234,7 @@ namespace TMS_Project.Data
                 {
                     TourneeId = 1,
                     ClientId = 1,
-                    Adresse = "100 Rue Commerce, Paris",
+                    Adresse = "100 Rue Commerce, Casa Blanca",
                     PoidsKg = 5000,
                     DateLivraison = new DateTime(2024, 1, 15, 10, 30, 0),
                     StatutLivraison = "Livrée",
@@ -245,7 +244,7 @@ namespace TMS_Project.Data
                 {
                     TourneeId = 1,
                     ClientId = 2,
-                    Adresse = "50 Rue Principale, Lyon",
+                    Adresse = "50 Rue Principale, Rabat",
                     PoidsKg = 3000,
                     DateLivraison = new DateTime(2024, 1, 15, 16, 0, 0),
                     StatutLivraison = "Livrée",
@@ -255,7 +254,7 @@ namespace TMS_Project.Data
                 {
                     TourneeId = 2,
                     ClientId = 3,
-                    Adresse = "200 Avenue Commerçant, Marseille",
+                    Adresse = "200 Avenue Commerçant, Rabat",
                     PoidsKg = 4500,
                     DateLivraison = new DateTime(2024, 1, 16, 14, 0, 0),
                     StatutLivraison = "En attente",
@@ -265,7 +264,7 @@ namespace TMS_Project.Data
                 {
                     TourneeId = 3,
                     ClientId = 4,
-                    Adresse = "75 Boulevard Niche, Toulouse",
+                    Adresse = "75 Boulevard Niche, Tanger",
                     PoidsKg = 2000,
                     DateLivraison = new DateTime(2024, 1, 17, 11, 30, 0),
                     StatutLivraison = "En attente",
@@ -275,7 +274,7 @@ namespace TMS_Project.Data
                 {
                     TourneeId = 4,
                     ClientId = 1,
-                    Adresse = "100 Rue Commerce, Paris",
+                    Adresse = "100 Rue Commerce, Casa Blanca",
                     PoidsKg = 6000,
                     DateLivraison = new DateTime(2024, 1, 18, 15, 0, 0),
                     StatutLivraison = "Livrée",
@@ -289,14 +288,14 @@ namespace TMS_Project.Data
             // Create Couts
             var couts = new List<Cout>
             {
-                new Cout { TourneeId = 1, TypeCout = "Carburant", Montant = 250.00m, Description = "Essence pour trajet Paris-Lyon", DateCout = DateTime.Now },
-                new Cout { TourneeId = 1, TypeCout = "Péage", Montant = 150.00m, Description = "Péage autoroute A6", DateCout = DateTime.Now },
-                new Cout { TourneeId = 1, TypeCout = "Maintenance", Montant = 50.50m, Description = "Remplissage AdBlue", DateCout = DateTime.Now },
-                new Cout { TourneeId = 2, TypeCout = "Carburant", Montant = 200.00m, Description = "Diesel pour trajet Lyon-Marseille", DateCout = DateTime.Now },
-                new Cout { TourneeId = 2, TypeCout = "Péage", Montant = 150.00m, Description = "Péage autoroute A7", DateCout = DateTime.Now },
-                new Cout { TourneeId = 4, TypeCout = "Carburant", Montant = 350.00m, Description = "Essence pour trajet long", DateCout = DateTime.Now },
-                new Cout { TourneeId = 4, TypeCout = "Maintenance", Montant = 100.50m, Description = "Révision mineure", DateCout = DateTime.Now },
-                new Cout { TourneeId = 4, TypeCout = "Péage", Montant = 70.25m, Description = "Péage autoroute", DateCout = DateTime.Now }
+                new Cout { TourneeId = 1, TypeCout = "Carburant", Montant = 2500.00m, Description = "Carburant Casa Blanca - Rabat (Diesel)", DateCout = DateTime.Now },
+                new Cout { TourneeId = 1, TypeCout = "Péage", Montant = 1200.00m, Description = "Péage autoroute Rabat", DateCout = DateTime.Now },
+                new Cout { TourneeId = 1, TypeCout = "Maintenance", Montant = 805.50m, Description = "Révision mineure et AdBlue", DateCout = DateTime.Now },
+                new Cout { TourneeId = 2, TypeCout = "Carburant", Montant = 2000.00m, Description = "Carburant Rabat - Tanger (Essence)", DateCout = DateTime.Now },
+                new Cout { TourneeId = 2, TypeCout = "Péage", Montant = 1500.00m, Description = "Péage autoroute Tanger", DateCout = DateTime.Now },
+                new Cout { TourneeId = 4, TypeCout = "Carburant", Montant = 3500.00m, Description = "Carburant Casa Blanca - Tanger (long trajet)", DateCout = DateTime.Now },
+                new Cout { TourneeId = 4, TypeCout = "Maintenance", Montant = 1007.50m, Description = "Révision technique véhicule", DateCout = DateTime.Now },
+                new Cout { TourneeId = 4, TypeCout = "Péage", Montant = 700.00m, Description = "Péage autoroute sections multiples", DateCout = DateTime.Now }
             };
 
             context.Couts.AddRange(couts);
