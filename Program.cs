@@ -6,6 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 
+// Add MVC controllers + views so `asp-controller` / `asp-action` links work
+builder.Services.AddControllersWithViews();
+
 // Add Entity Framework Core with SQL Server
 builder.Services.AddDbContext<TmsDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -25,18 +28,21 @@ using (var scope = app.Services.CreateScope())
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
-
 app.UseHttpsRedirection();
-
+app.UseStaticFiles(); // <-- sert CSS/JS et views statiques
 app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapStaticAssets();
+
+// Map controller routes so links using asp-controller/asp-action resolve
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
 app.MapRazorPages()
    .WithStaticAssets();
 

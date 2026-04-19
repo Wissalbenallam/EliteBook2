@@ -1,0 +1,35 @@
+﻿@model IEnumerable<TMS_Project.Models.Camion>
+
+@{
+    ViewData["Title"] = "Camions";
+}
+
+<h3>🚛 Camions</h3>
+
+<p>
+    <a asp-controller="Camion" asp-action="Create" class="btn btn-primary">Créer un camion</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Immatriculation</th>
+            <th>Transporteur</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var c in Model)
+    {
+        <tr>
+            <td>@c.CamionId</td>
+            <td>@c.Immatriculation</td>
+            <td>@c.Transporteur?.Nom</td>
+            <td>
+                <a asp-controller="Camion" asp-action="Details" asp-route-id="@c.CamionId" class="btn btn-sm btn-secondary">Détails</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

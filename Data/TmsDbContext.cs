@@ -16,6 +16,7 @@ namespace TMS_Project.Data
         public DbSet<Tournee> Tournees { get; set; }
         public DbSet<Livraison> Livraisons { get; set; }
         public DbSet<Cout> Couts { get; set; }
+        public DbSet<DemandeLivraison> DemandesLivraison { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -91,6 +92,9 @@ namespace TMS_Project.Data
                 .WithMany(cl => cl.Livraisons)
                 .HasForeignKey(l => l.ClientId)
                 .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Livraison>()
+                .Property(l => l.MontantEstime)
+                .HasPrecision(10, 2); // Configure la précision décimale
 
             // Cout Configuration
             modelBuilder.Entity<Cout>()

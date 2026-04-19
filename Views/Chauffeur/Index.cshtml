@@ -1,0 +1,35 @@
+﻿@model IEnumerable<TMS_Project.Models.Chauffeur>
+
+@{
+    ViewData["Title"] = "Chauffeurs";
+}
+
+<h3>👤 Chauffeurs</h3>
+
+<p>
+    <a asp-controller="Chauffeur" asp-action="Create" class="btn btn-primary">Créer un chauffeur</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Transporteur</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var ch in Model)
+    {
+        <tr>
+            <td>@ch.ChauffeurId</td>
+            <td>@ch.Nom</td>
+            <td>@ch.Transporteur?.Nom</td>
+            <td>
+                <a asp-controller="Chauffeur" asp-action="Details" asp-route-id="@ch.ChauffeurId" class="btn btn-sm btn-secondary">Détails</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

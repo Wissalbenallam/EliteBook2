@@ -9,6 +9,7 @@ namespace TMS_Project.Models
         public int PoidsKg { get; set; }
         public DateTime DateLivraison { get; set; }
         public string StatutLivraison { get; set; } = "En attente"; // En attente, Livrée, Échouée
+        public decimal MontantEstime { get; set; }  // Changed to decimal for montants financiers
         public DateTime? DateRealisation { get; set; }
 
         // Foreign Keys

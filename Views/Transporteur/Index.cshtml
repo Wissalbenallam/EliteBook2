@@ -1,0 +1,33 @@
+﻿@model IEnumerable<TMS_Project.Models.Transporteur>
+
+@{
+    ViewData["Title"] = "Transporteurs";
+}
+
+<h3>🏢 Transporteurs</h3>
+
+<p>
+    <a asp-controller="Transporteur" asp-action="Create" class="btn btn-primary">Créer un transporteur</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var t in Model)
+    {
+        <tr>
+            <td>@t.TransporteurId</td>
+            <td>@t.Nom</td>
+            <td>
+                <a asp-controller="Transporteur" asp-action="Details" asp-route-id="@t.TransporteurId" class="btn btn-sm btn-secondary">Détails</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

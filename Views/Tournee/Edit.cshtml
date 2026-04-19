@@ -1,0 +1,38 @@
+@model TMS_Project.Models.Tournee
+@{
+    ViewData["Title"] = "Modifier Tournée";
+}
+
+<h3>Modifier tournée #@Model.TourneeId</h3>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="TourneeId" />
+
+    <div class="mb-3">
+        <label asp-for="DateTournee" class="form-label"></label>
+        <input asp-for="DateTournee" class="form-control" type="datetime-local" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="TransporteurId" class="form-label">Transporteur (ID)</label>
+        <input asp-for="TransporteurId" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CamionId" class="form-label">Camion (ID)</label>
+        <input asp-for="CamionId" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ChauffeurId" class="form-label">Chauffeur (ID)</label>
+        <input asp-for="ChauffeurId" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CoutTotal" class="form-label">Coût total</label>
+        <input asp-for="CoutTotal" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <a asp-action="Index" class="btn btn-secondary">Annuler</a>
+</form>

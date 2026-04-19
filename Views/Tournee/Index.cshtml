@@ -1,0 +1,49 @@
+﻿@model IEnumerable<TMS_Project.Models.Tournee>
+@{
+    ViewData["Title"] = "Tournées";
+}
+
+<h3>📅 Tournées</h3>
+
+<p>
+    <a asp-controller="Tournee" asp-action="Create" class="btn btn-primary">Créer une tournée</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Transporteur</th>
+            <th>Camion</th>
+            <th>Chauffeur</th>
+            <th>Cout total</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @if (!Model.Any())
+    {
+        <tr><td colspan="7" class="text-center text-muted">Aucune tournée trouvée.</td></tr>
+    }
+    else
+    {
+        foreach (var t in Model)
+        {
+            <tr>
+                <td>@t.TourneeId</td>
+                <td>@t.DateTournee.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@t.Transporteur?.Nom</td>
+                <td>@t.Camion?.Immatriculation</td>
+                <td>@t.Chauffeur?.Nom</td>
+                <td>@t.CoutTotal.ToString("C")</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@t.TourneeId" class="btn btn-sm btn-info">Détails</a>
+                    <a asp-action="Edit" asp-route-id="@t.TourneeId" class="btn btn-sm btn-warning">Modifier</a>
+                    <a asp-action="Delete" asp-route-id="@t.TourneeId" class="btn btn-sm btn-danger">Supprimer</a>
+                </td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>

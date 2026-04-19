@@ -1,0 +1,37 @@
+@model TMS_Project.Models.Tournee
+@{
+    ViewData["Title"] = "Créer Tournée";
+}
+
+<h3>Créer une tournée</h3>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="DateTournee" class="form-label"></label>
+        <input asp-for="DateTournee" class="form-control" type="datetime-local" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="TransporteurId" class="form-label">Transporteur (ID)</label>
+        <input asp-for="TransporteurId" class="form-control" />
+        <small class="text-muted">Remplacer par un SelectList dans le controller si souhaité.</small>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CamionId" class="form-label">Camion (ID)</label>
+        <input asp-for="CamionId" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ChauffeurId" class="form-label">Chauffeur (ID)</label>
+        <input asp-for="ChauffeurId" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CoutTotal" class="form-label">Coût total</label>
+        <input asp-for="CoutTotal" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Créer</button>
+    <a asp-action="Index" class="btn btn-secondary">Annuler</a>
+</form>
