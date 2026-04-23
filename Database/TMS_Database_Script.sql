@@ -1,4 +1,4 @@
--- ========================================
+﻿-- ========================================
 -- TMS Database Creation Script
 -- SQL Server
 -- ========================================
@@ -74,7 +74,7 @@ CREATE TABLE Tournee (
     CamionId INT NOT NULL,
     ChauffeurId INT NOT NULL,
     DateTournee DATETIME,
-    StatutTournee NVARCHAR(50) DEFAULT 'Planifiée',
+    StatutTournee NVARCHAR(50) DEFAULT 'PlanifiÃ©e',
     CoutTotal DECIMAL(10, 2) DEFAULT 0,
     FOREIGN KEY (TransporteurId) REFERENCES Transporteur(TransporteurId),
     FOREIGN KEY (CamionId) REFERENCES Camion(CamionId),
@@ -148,55 +148,57 @@ INSERT INTO Chauffeur (TransporteurId, Nom, Prenom, Telephone, Email, NumeroPerm
 
 -- Insert Client
 INSERT INTO Client (Nom, Adresse, Telephone, Email) VALUES
-('Supermarché Central', '100 Rue Commerce, Paris', '01-45-67-89-01', 'delivery@supermarche-central.fr'),
-('Petite Épicerie Local', '50 Rue Principale, Lyon', '04-12-34-56-78', 'contact@epicerie-local.fr'),
-('Hyper Magasin', '200 Avenue Commerçant, Marseille', '04-98-76-54-32', 'logistique@hypermagasin.fr'),
-('Magasin Spécialisé', '75 Boulevard Niche, Toulouse', '05-61-22-33-44', 'achat@specialise.fr');
+('SupermarchÃ© Central', '100 Rue Commerce, Paris', '01-45-67-89-01', 'delivery@supermarche-central.fr'),
+('Petite Ã‰picerie Local', '50 Rue Principale, Lyon', '04-12-34-56-78', 'contact@epicerie-local.fr'),
+('Hyper Magasin', '200 Avenue CommerÃ§ant, Marseille', '04-98-76-54-32', 'logistique@hypermagasin.fr'),
+('Magasin SpÃ©cialisÃ©', '75 Boulevard Niche, Toulouse', '05-61-22-33-44', 'achat@specialise.fr');
 
 -- Insert Tournee
 INSERT INTO Tournee (TransporteurId, CamionId, ChauffeurId, DateTournee, StatutTournee, CoutTotal) VALUES
-(1, 1, 1, '2024-01-15 08:00:00', 'Terminée', 450.50),
+(1, 1, 1, '2024-01-15 08:00:00', 'TerminÃ©e', 450.50),
 (1, 2, 2, '2024-01-16 08:30:00', 'En cours', 350.00),
-(2, 3, 3, '2024-01-17 07:00:00', 'Planifiée', 0),
-(3, 4, 4, '2024-01-18 09:00:00', 'Terminée', 520.75);
+(2, 3, 3, '2024-01-17 07:00:00', 'PlanifiÃ©e', 0),
+(3, 4, 4, '2024-01-18 09:00:00', 'TerminÃ©e', 520.75);
 
 -- Insert Livraison
 INSERT INTO Livraison (TourneeId, ClientId, Adresse, PoidsKg, DateLivraison, StatutLivraison, DateRealisation) VALUES
-(1, 1, '100 Rue Commerce, Paris', 5000, '2024-01-15 10:30:00', 'Livrée', '2024-01-15 10:35:00'),
-(1, 2, '50 Rue Principale, Lyon', 3000, '2024-01-15 16:00:00', 'Livrée', '2024-01-15 16:05:00'),
-(2, 3, '200 Avenue Commerçant, Marseille', 4500, '2024-01-16 14:00:00', 'En attente', NULL),
+(1, 1, '100 Rue Commerce, Paris', 5000, '2024-01-15 10:30:00', 'LivrÃ©e', '2024-01-15 10:35:00'),
+(1, 2, '50 Rue Principale, Lyon', 3000, '2024-01-15 16:00:00', 'LivrÃ©e', '2024-01-15 16:05:00'),
+(2, 3, '200 Avenue CommerÃ§ant, Marseille', 4500, '2024-01-16 14:00:00', 'En attente', NULL),
 (3, 4, '75 Boulevard Niche, Toulouse', 2000, '2024-01-17 11:30:00', 'En attente', NULL),
-(4, 1, '100 Rue Commerce, Paris', 6000, '2024-01-18 15:00:00', 'Livrée', '2024-01-18 15:20:00');
+(4, 1, '100 Rue Commerce, Paris', 6000, '2024-01-18 15:00:00', 'LivrÃ©e', '2024-01-18 15:20:00');
 
 -- Insert Cout
 INSERT INTO Cout (TourneeId, TypeCout, Montant, Description) VALUES
 (1, 'Carburant', 250.00, 'Essence pour trajet Paris-Lyon'),
-(1, 'Péage', 150.00, 'Péage autoroute A6'),
+(1, 'PÃ©age', 150.00, 'PÃ©age autoroute A6'),
 (1, 'Maintenance', 50.50, 'Remplissage AdBlue'),
 (2, 'Carburant', 200.00, 'Diesel pour trajet Lyon-Marseille'),
-(2, 'Péage', 150.00, 'Péage autoroute A7'),
+(2, 'PÃ©age', 150.00, 'PÃ©age autoroute A7'),
 (4, 'Carburant', 350.00, 'Essence pour trajet long'),
-(4, 'Maintenance', 100.50, 'Révision mineure'),
-(4, 'Péage', 70.25, 'Péage autoroute');
+(4, 'Maintenance', 100.50, 'RÃ©vision mineure'),
+(4, 'PÃ©age', 70.25, 'PÃ©age autoroute');
 
 -- ========================================
 -- View for Total Cost by Transporter
 -- ========================================
+GO
 CREATE VIEW vw_CoutParTransporteur AS
 SELECT 
     t.Nom AS NomTransporteur,
     SUM(co.Montant) AS CoutTotal,
-    COUNT(DISTINCT to.TourneeId) AS NombreTournees,
+    COUNT(DISTINCT trn.TourneeId) AS NombreTournees,
     COUNT(DISTINCT l.LivraisonId) AS NombreLivraisons
 FROM Transporteur t
-LEFT JOIN Tournee to ON t.TransporteurId = to.TransporteurId
-LEFT JOIN Cout co ON to.TourneeId = co.TourneeId
-LEFT JOIN Livraison l ON to.TourneeId = l.TourneeId
+LEFT JOIN Tournee trn ON t.TransporteurId = trn.TransporteurId
+LEFT JOIN Cout co ON trn.TourneeId = co.TourneeId
+LEFT JOIN Livraison l ON trn.TourneeId = l.TourneeId
 GROUP BY t.TransporteurId, t.Nom;
 
 -- ========================================
 -- View for Current Active Tours
 -- ========================================
+GO
 CREATE VIEW vw_TourneeActives AS
 SELECT 
     t.TourneeId,
@@ -213,7 +215,9 @@ JOIN Camion c ON t.CamionId = c.CamionId
 JOIN Chauffeur ch ON t.ChauffeurId = ch.ChauffeurId
 LEFT JOIN Livraison l ON t.TourneeId = l.TourneeId
 LEFT JOIN Cout co ON t.TourneeId = co.TourneeId
-WHERE t.StatutTournee IN ('Planifiée', 'En cours')
+WHERE t.StatutTournee IN ('PlanifiÃ©e', 'En cours')
 GROUP BY t.TourneeId, tr.Nom, c.Immatriculation, ch.Prenom, ch.Nom, t.DateTournee, t.StatutTournee;
 
+GO
 print 'Database TMSDatabase created successfully with sample data!'
+

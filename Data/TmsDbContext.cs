@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+ï»¿using Microsoft.EntityFrameworkCore;
 using TMS_Project.Models;
 
 namespace TMS_Project.Data
@@ -22,7 +22,6 @@ namespace TMS_Project.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Transporteur Configuration
             modelBuilder.Entity<Transporteur>()
                 .HasKey(t => t.TransporteurId);
             modelBuilder.Entity<Transporteur>()
@@ -30,7 +29,6 @@ namespace TMS_Project.Data
                 .IsRequired()
                 .HasMaxLength(255);
 
-            // Camion Configuration
             modelBuilder.Entity<Camion>()
                 .HasKey(c => c.CamionId);
             modelBuilder.Entity<Camion>()
@@ -43,7 +41,6 @@ namespace TMS_Project.Data
                 .IsRequired()
                 .HasMaxLength(20);
 
-            // Chauffeur Configuration
             modelBuilder.Entity<Chauffeur>()
                 .HasKey(ch => ch.ChauffeurId);
             modelBuilder.Entity<Chauffeur>()
@@ -52,7 +49,6 @@ namespace TMS_Project.Data
                 .HasForeignKey(ch => ch.TransporteurId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Client Configuration
             modelBuilder.Entity<Client>()
                 .HasKey(cl => cl.ClientId);
             modelBuilder.Entity<Client>()
@@ -60,7 +56,21 @@ namespace TMS_Project.Data
                 .IsRequired()
                 .HasMaxLength(255);
 
-            // Tournee Configuration
+            modelBuilder.Entity<DemandeLivraison>()
+                .HasKey(d => d.DemandeLivraisonId);
+            modelBuilder.Entity<DemandeLivraison>()
+                .Property(d => d.TypeService)
+                .IsRequired()
+                .HasMaxLength(100);
+            modelBuilder.Entity<DemandeLivraison>()
+                .Property(d => d.MontantEstime)
+                .HasPrecision(10, 2);
+            modelBuilder.Entity<DemandeLivraison>()
+                .HasOne(d => d.Client)
+                .WithMany(c => c.DemandesLivraison)
+                .HasForeignKey(d => d.ClientId)
+                .OnDelete(DeleteBehavior.SetNull);
+
             modelBuilder.Entity<Tournee>()
                 .HasKey(to => to.TourneeId);
             modelBuilder.Entity<Tournee>()
@@ -79,7 +89,6 @@ namespace TMS_Project.Data
                 .HasForeignKey(to => to.ChauffeurId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Livraison Configuration
             modelBuilder.Entity<Livraison>()
                 .HasKey(l => l.LivraisonId);
             modelBuilder.Entity<Livraison>()
@@ -94,9 +103,8 @@ namespace TMS_Project.Data
                 .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Livraison>()
                 .Property(l => l.MontantEstime)
-                .HasPrecision(10, 2); // Configure la précision décimale
+                .HasPrecision(10, 2);
 
-            // Cout Configuration
             modelBuilder.Entity<Cout>()
                 .HasKey(co => co.CoutId);
             modelBuilder.Entity<Cout>()

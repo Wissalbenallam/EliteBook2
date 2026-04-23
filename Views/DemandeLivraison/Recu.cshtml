@@ -1,0 +1,44 @@
+@model DemandeLivraison
+
+@{
+    ViewData["Title"] = "Reçu client";
+}
+
+@if (Model.Statut != "Acceptée")
+{
+    <div class="section-card">
+        <h1 class="page-title">Reçu non disponible</h1>
+        <p class="page-lead">Le reçu apparaîtra dès que la demande sera acceptée.</p>
+        <div class="mini-info-list">
+            <div class="mini-info-item"><span>Référence</span><span>#@Model.DemandeLivraisonId</span></div>
+            <div class="mini-info-item"><span>Statut</span><span>@Model.Statut</span></div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="section-card">
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Reçu de validation</h1>
+                <p class="page-lead">Ce document confirme que la demande du client a été acceptée.</p>
+            </div>
+            <span class="badge-soft"><i class="bi bi-patch-check"></i> Acceptée</span>
+        </div>
+
+        <div class="mini-info-list">
+            <div class="mini-info-item"><span>Numéro reçu</span><span>@Model.NumeroRecu</span></div>
+            <div class="mini-info-item"><span>Client</span><span>@Model.Client?.Nom</span></div>
+            <div class="mini-info-item"><span>Email</span><span>@Model.Client?.Email</span></div>
+            <div class="mini-info-item"><span>Téléphone</span><span>@Model.Client?.Telephone</span></div>
+            <div class="mini-info-item"><span>Service</span><span>@Model.TypeService</span></div>
+            <div class="mini-info-item"><span>Marchandise</span><span>@Model.DescriptionMarchandise</span></div>
+            <div class="mini-info-item"><span>Quantité</span><span>@Model.Quantite</span></div>
+            <div class="mini-info-item"><span>Poids</span><span>@Model.PoidsKg kg</span></div>
+            <div class="mini-info-item"><span>Adresse livraison</span><span>@Model.Adresse</span></div>
+            <div class="mini-info-item"><span>Date souhaitée</span><span>@Model.DateSouhaitee.ToString("dd/MM/yyyy")</span></div>
+            <div class="mini-info-item"><span>Date validation</span><span>@Model.DateValidation?.ToString("dd/MM/yyyy HH:mm")</span></div>
+            <div class="mini-info-item"><span>Montant</span><span>@Model.MontantEstime.ToString("0.00") MAD</span></div>
+        </div>
+    </div>
+}

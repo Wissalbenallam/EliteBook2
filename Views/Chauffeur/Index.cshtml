@@ -1,35 +1,57 @@
-﻿@model IEnumerable<TMS_Project.Models.Chauffeur>
+@model IEnumerable<TMS_Project.Models.Chauffeur>
 
 @{
     ViewData["Title"] = "Chauffeurs";
 }
 
-<h3>👤 Chauffeurs</h3>
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Chauffeurs</h1>
+        <p class="page-lead">Retrouve les conducteurs, leur rattachement et accède rapidement à leurs fiches.</p>
+    </div>
+    <a asp-controller="Chauffeur" asp-action="Create" class="btn-soft">
+        <i class="bi bi-plus-circle"></i> Créer un chauffeur
+    </a>
+</div>
 
-<p>
-    <a asp-controller="Chauffeur" asp-action="Create" class="btn btn-primary">Créer un chauffeur</a>
-</p>
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nom</th>
-            <th>Transporteur</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var ch in Model)
-    {
-        <tr>
-            <td>@ch.ChauffeurId</td>
-            <td>@ch.Nom</td>
-            <td>@ch.Transporteur?.Nom</td>
-            <td>
-                <a asp-controller="Chauffeur" asp-action="Details" asp-route-id="@ch.ChauffeurId" class="btn btn-sm btn-secondary">Détails</a>
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+<div class="table-shell">
+    <table class="table dashboard-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom complet</th>
+                <th>Transporteur</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="4">
+                    <div class="empty-state">
+                        <i class="bi bi-person-vcard"></i>
+                        <div class="mt-2">Aucun chauffeur n'est encore enregistré.</div>
+                    </div>
+                </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var ch in Model)
+            {
+                <tr>
+                    <td><span class="badge-soft">#@ch.ChauffeurId</span></td>
+                    <td class="fw-semibold">@ch.Prenom @ch.Nom</td>
+                    <td>@(ch.Transporteur?.Nom ?? "Non affecté")</td>
+                    <td class="text-end">
+                        <a asp-controller="Chauffeur" asp-action="Details" asp-route-id="@ch.ChauffeurId" class="btn-soft">
+                            <i class="bi bi-eye"></i> Détails
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>

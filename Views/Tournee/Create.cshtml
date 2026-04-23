@@ -1,37 +1,94 @@
-@model TMS_Project.Models.Tournee
+﻿@model TMS_Project.ViewModels.TourneeFormViewModel
 @{
-    ViewData["Title"] = "Cr�er Tourn�e";
+    ViewData["Title"] = "Créer une tournée";
 }
 
-<h3>Cr�er une tourn�e</h3>
+<h3>Créer une tournée</h3>
 
 <form asp-action="Create" method="post">
-    <div class="mb-3">
-        <label asp-for="DateTournee" class="form-label"></label>
-        <input asp-for="DateTournee" class="form-control" type="datetime-local" />
+    @Html.AntiForgeryToken()
+
+    <div class="row g-3">
+        <div class="col-md-4">
+            <label asp-for="Tournee.DateTournee" class="form-label"></label>
+            <input asp-for="Tournee.DateTournee" class="form-control" type="date" />
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="Tournee.TransporteurId" class="form-label">Transporteur</label>
+            <select asp-for="Tournee.TransporteurId" asp-items="Model.Transporteurs" class="form-select">
+                <option value="">Sélectionner</option>
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="Tournee.StatutTournee" class="form-label">Statut</label>
+            <select asp-for="Tournee.StatutTournee" class="form-select">
+                <option value="Planifiée">Planifiée</option>
+                <option value="En cours">En cours</option>
+                <option value="Terminée">Terminée</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Tournee.CamionId" class="form-label">Camion</label>
+            <select asp-for="Tournee.CamionId" asp-items="Model.Camions" class="form-select">
+                <option value="">Sélectionner</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Tournee.ChauffeurId" class="form-label">Chauffeur</label>
+            <select asp-for="Tournee.ChauffeurId" asp-items="Model.Chauffeurs" class="form-select">
+                <option value="">Sélectionner</option>
+            </select>
+        </div>
+
+        <div class="col-12">
+            <label class="form-label">Livraisons à affecter</label>
+            <div class="border rounded p-3">
+                @if (!Model.LivraisonsDisponibles.Any())
+                {
+                    <div class="text-muted">Aucune livraison disponible.</div>
+                }
+                else
+                {
+                    foreach (var livraison in Model.LivraisonsDisponibles)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   name="SelectedLivraisonIds"
+                                   value="@livraison.LivraisonId"
+                                   id="liv-@livraison.LivraisonId"
+                                   @(Model.SelectedLivraisonIds.Contains(livraison.LivraisonId) ? "checked" : null) />
+                            <label class="form-check-label" for="liv-@livraison.LivraisonId">
+                                Livraison #@livraison.LivraisonId - @livraison.Client?.Nom - @livraison.Adresse
+                            </label>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="TypeCout" class="form-label">Type de coût initial</label>
+            <input asp-for="TypeCout" class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="MontantCout" class="form-label">Montant</label>
+            <input asp-for="MontantCout" class="form-control" type="number" step="0.01" min="0" />
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="DescCout" class="form-label">Description</label>
+            <input asp-for="DescCout" class="form-control" />
+        </div>
     </div>
 
-    <div class="mb-3">
-        <label asp-for="TransporteurId" class="form-label">Transporteur (ID)</label>
-        <input asp-for="TransporteurId" class="form-control" />
-        <small class="text-muted">Remplacer par un SelectList dans le controller si souhait�.</small>
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary">Créer</button>
+        <a asp-action="Index" class="btn btn-secondary">Annuler</a>
     </div>
-
-    <div class="mb-3">
-        <label asp-for="CamionId" class="form-label">Camion (ID)</label>
-        <input asp-for="CamionId" class="form-control" />
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="ChauffeurId" class="form-label">Chauffeur (ID)</label>
-        <input asp-for="ChauffeurId" class="form-control" />
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="CoutTotal" class="form-label">Co�t total</label>
-        <input asp-for="CoutTotal" class="form-control" />
-    </div>
-
-    <button type="submit" class="btn btn-primary">Cr�er</button>
-    <a asp-action="Index" class="btn btn-secondary">Annuler</a>
 </form>

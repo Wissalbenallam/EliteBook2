@@ -1,0 +1,35 @@
+@model TMS_Project.Models.Transporteur
+
+@{
+    ViewData["Title"] = "Détails transporteur";
+}
+
+<h3>Détails du transporteur</h3>
+
+<dl class="row">
+    <dt class="col-sm-3">Nom</dt>
+    <dd class="col-sm-9">@Model.Nom</dd>
+
+    <dt class="col-sm-3">Adresse</dt>
+    <dd class="col-sm-9">@Model.Adresse</dd>
+
+    <dt class="col-sm-3">Téléphone</dt>
+    <dd class="col-sm-9">@Model.Telephone</dd>
+
+    <dt class="col-sm-3">Email</dt>
+    <dd class="col-sm-9">@Model.Email</dd>
+
+    <dt class="col-sm-3">Date création</dt>
+    <dd class="col-sm-9">@Model.DateCreation.ToString("dd/MM/yyyy")</dd>
+
+    <dt class="col-sm-3">Camions</dt>
+    <dd class="col-sm-9">@Model.Camions.Count</dd>
+
+    <dt class="col-sm-3">Chauffeurs</dt>
+    <dd class="col-sm-9">@Model.Chauffeurs.Count</dd>
+
+    <dt class="col-sm-3">Tournées</dt>
+    <dd class="col-sm-9">@Model.Tournees.Count</dd>
+</dl>
+
+<a asp-action="Index" class="btn btn-secondary">Retour</a>

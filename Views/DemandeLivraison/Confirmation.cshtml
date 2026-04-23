@@ -1,0 +1,24 @@
+@model DemandeLivraison
+
+@{
+    ViewData["Title"] = "Confirmation";
+}
+
+<div class="section-card">
+    <h1 class="page-title">Demande enregistrée</h1>
+    <p class="page-lead">La demande est stockée dans la base de données. Dès qu'elle sera acceptée, le client pourra consulter son reçu.</p>
+
+    <div class="mini-info-list">
+        <div class="mini-info-item"><span>Client</span><span>@Model.Client?.Nom</span></div>
+        <div class="mini-info-item"><span>Service</span><span>@Model.TypeService</span></div>
+        <div class="mini-info-item"><span>Montant estimé</span><span>@Model.MontantEstime.ToString("0.00") MAD</span></div>
+        <div class="mini-info-item"><span>Statut</span><span>@Model.Statut</span></div>
+        <div class="mini-info-item"><span>Référence</span><span>#@Model.DemandeLivraisonId</span></div>
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="Recu" asp-route-id="@Model.DemandeLivraisonId" class="btn-soft">
+            <i class="bi bi-receipt"></i> Ouvrir la page du reçu
+        </a>
+    </div>
+</div>

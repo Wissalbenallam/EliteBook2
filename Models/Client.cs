@@ -1,4 +1,4 @@
-namespace TMS_Project.Models
+﻿namespace TMS_Project.Models
 {
     public class Client
     {
@@ -9,7 +9,7 @@ namespace TMS_Project.Models
         public string Email { get; set; } = string.Empty;
         public DateTime DateCreation { get; set; } = DateTime.Now;
 
-        // Relationships
         public ICollection<Livraison> Livraisons { get; set; } = new List<Livraison>();
+        public ICollection<DemandeLivraison> DemandesLivraison { get; set; } = new List<DemandeLivraison>();
     }
 }

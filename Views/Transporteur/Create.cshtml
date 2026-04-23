@@ -1,0 +1,36 @@
+@model TMS_Project.Models.Transporteur
+
+@{
+    ViewData["Title"] = "Créer un transporteur";
+}
+
+<h3>Créer un transporteur</h3>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="Nom" class="form-label"></label>
+        <input asp-for="Nom" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Adresse" class="form-label"></label>
+        <input asp-for="Adresse" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Telephone" class="form-label"></label>
+        <input asp-for="Telephone" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="DateCreation" class="form-label"></label>
+        <input asp-for="DateCreation" type="date" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <a asp-action="Index" class="btn btn-secondary">Retour</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

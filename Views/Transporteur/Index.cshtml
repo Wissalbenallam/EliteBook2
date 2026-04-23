@@ -1,33 +1,55 @@
-﻿@model IEnumerable<TMS_Project.Models.Transporteur>
+@model IEnumerable<TMS_Project.Models.Transporteur>
 
 @{
     ViewData["Title"] = "Transporteurs";
 }
 
-<h3>🏢 Transporteurs</h3>
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Transporteurs</h1>
+        <p class="page-lead">Structure ton réseau de partenaires et accède rapidement à leurs informations.</p>
+    </div>
+    <a asp-controller="Transporteur" asp-action="Create" class="btn-soft">
+        <i class="bi bi-plus-circle"></i> Créer un transporteur
+    </a>
+</div>
 
-<p>
-    <a asp-controller="Transporteur" asp-action="Create" class="btn btn-primary">Créer un transporteur</a>
-</p>
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nom</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var t in Model)
-    {
-        <tr>
-            <td>@t.TransporteurId</td>
-            <td>@t.Nom</td>
-            <td>
-                <a asp-controller="Transporteur" asp-action="Details" asp-route-id="@t.TransporteurId" class="btn btn-sm btn-secondary">Détails</a>
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+<div class="table-shell">
+    <table class="table dashboard-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="3">
+                    <div class="empty-state">
+                        <i class="bi bi-buildings"></i>
+                        <div class="mt-2">Aucun transporteur n'est encore enregistré.</div>
+                    </div>
+                </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var t in Model)
+            {
+                <tr>
+                    <td><span class="badge-soft">#@t.TransporteurId</span></td>
+                    <td class="fw-semibold">@t.Nom</td>
+                    <td class="text-end">
+                        <a asp-controller="Transporteur" asp-action="Details" asp-route-id="@t.TransporteurId" class="btn-soft">
+                            <i class="bi bi-eye"></i> Détails
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>

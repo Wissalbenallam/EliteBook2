@@ -1,0 +1,32 @@
+@model TMS_Project.Models.Chauffeur
+
+@{
+    ViewData["Title"] = "Détails chauffeur";
+}
+
+<h3>Détails du chauffeur</h3>
+
+<dl class="row">
+    <dt class="col-sm-3">Nom complet</dt>
+    <dd class="col-sm-9">@Model.Prenom @Model.Nom</dd>
+
+    <dt class="col-sm-3">Transporteur</dt>
+    <dd class="col-sm-9">@Model.Transporteur?.Nom</dd>
+
+    <dt class="col-sm-3">Téléphone</dt>
+    <dd class="col-sm-9">@Model.Telephone</dd>
+
+    <dt class="col-sm-3">Email</dt>
+    <dd class="col-sm-9">@Model.Email</dd>
+
+    <dt class="col-sm-3">Permis</dt>
+    <dd class="col-sm-9">@Model.NumeroPermis</dd>
+
+    <dt class="col-sm-3">Date embauche</dt>
+    <dd class="col-sm-9">@Model.DateEmbauche.ToString("dd/MM/yyyy")</dd>
+
+    <dt class="col-sm-3">Statut</dt>
+    <dd class="col-sm-9">@(Model.EstActif ? "Actif" : "Inactif")</dd>
+</dl>
+
+<a asp-action="Index" class="btn btn-secondary">Retour</a>
