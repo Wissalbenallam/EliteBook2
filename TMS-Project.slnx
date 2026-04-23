@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/Services/">
+    <File Path="CalculTransportService.cs" />
+  </Folder>
+  <Project Path="TMS-Project/TMS-Project.csproj" />
+</Solution>
